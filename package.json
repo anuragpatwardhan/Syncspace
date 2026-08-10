@@ -7,6 +7,7 @@
     "dev:api": "pnpm --filter @syncspace/api dev",
     "dev:web": "pnpm --filter @syncspace/web dev",
     "build": "pnpm -r build",
+    "test": "pnpm -r test",
     "db:push": "pnpm --filter @syncspace/api db:push",
     "db:studio": "pnpm --filter @syncspace/api db:studio",
     "docker:up": "docker compose up -d",
