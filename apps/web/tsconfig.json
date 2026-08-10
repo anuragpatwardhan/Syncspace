@@ -16,8 +16,7 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@syncspace/shared": ["../../packages/shared/src/types.ts"]
+      "@/*": ["src/*"]
     }
   },
   "include": ["src"]
