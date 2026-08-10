@@ -1,11 +1,14 @@
-import { forwardRef, type ButtonHTMLAttributes } from 'react';
+import { forwardRef, type ReactNode } from 'react';
 import { motion, type HTMLMotionProps } from 'framer-motion';
 import { cn } from '@/lib/cn';
 
 type Variant = 'primary' | 'secondary' | 'ghost' | 'outline';
 type Size = 'sm' | 'md' | 'lg';
 
-type Props = HTMLMotionProps<'button'> & {
+// HTMLMotionProps widens children to include MotionValue, which cannot be rendered
+// inside the plain span this button wraps its content in.
+type Props = Omit<HTMLMotionProps<'button'>, 'children'> & {
+  children?: ReactNode;
   variant?: Variant;
   size?: Size;
   loading?: boolean;
