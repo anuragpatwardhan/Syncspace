@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: syncspace_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: syncspace
+      POSTGRES_PASSWORD: syncspace
+      POSTGRES_DB: syncspace
+    ports:
+      - "5432:5432"
+    volumes:
+      - syncspace_pg:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: syncspace_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - syncspace_redis:/data
+
+volumes:
+  syncspace_pg:
+  syncspace_redis:

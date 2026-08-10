@@ -1,0 +1,16 @@
+{
+  "name": "syncspace",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "dev:api": "pnpm --filter @syncspace/api dev",
+    "dev:web": "pnpm --filter @syncspace/web dev",
+    "build": "pnpm -r build",
+    "db:push": "pnpm --filter @syncspace/api db:push",
+    "db:studio": "pnpm --filter @syncspace/api db:studio",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down"
+  },
+  "packageManager": "pnpm@9.0.0"
+}
