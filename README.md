@@ -92,8 +92,19 @@ pages disable the Google button and name the two variables to set.
 pnpm test
 ```
 
-Covers the state reducer: version bumping, immutability, last-write-wins ordering,
-ops targeting deleted notes, and replay convergence.
+35 cases:
+
+- **State reducer** — version bumping, immutability, last-write-wins ordering, ops
+  targeting deleted notes, and replay convergence.
+- **JWT** — claim round-tripping, issuer and expiry stamping, and rejection of tampered
+  payloads and bad signatures.
+- **Passwords** — salting, verification, and that a malformed hash returns false rather
+  than throwing.
+- **Auth guard** — the difference between a missing token and an invalid one, and that a
+  forged token never reaches `req.user`.
+
+`apps/api/vitest.config.ts` supplies throwaway environment values, since `lib/env.ts`
+validates the environment at import time and would otherwise refuse to load.
 
 ## API
 
