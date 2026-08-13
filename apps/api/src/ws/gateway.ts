@@ -60,7 +60,7 @@ function send(ws: WebSocket, msg: ServerMessage) {
   if (ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(msg));
 }
 
-export function attachWsGateway(server: Server) {
+export function attachWsGateway(server: Server): WebSocketServer {
   const wss = new WebSocketServer({ server, path: '/ws' });
 
   const heartbeat = setInterval(() => {
@@ -73,6 +73,9 @@ export function attachWsGateway(server: Server) {
       }
     }
   }, 15_000);
+  // The HTTP server already holds the process open; the heartbeat should not do
+  // so on its own, or a closed server would hang waiting for the next tick.
+  heartbeat.unref();
   wss.on('close', () => clearInterval(heartbeat));
 
   wss.on('connection', (ws: WebSocket, _req: IncomingMessage) => {
@@ -164,6 +167,10 @@ export function attachWsGateway(server: Server) {
     ws.on('close', () => leaveRoom(client));
     ws.on('error', () => leaveRoom(client));
   });
+
+  // Returned so the caller can shut the gateway down; closing the HTTP server
+  // alone leaves the WebSocket server and its heartbeat running.
+  return wss;
 }
 
 function leaveRoom(client: Client) {
