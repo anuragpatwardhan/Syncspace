@@ -92,7 +92,7 @@ pages disable the Google button and name the two variables to set.
 pnpm test
 ```
 
-35 cases:
+52 cases:
 
 - **State reducer** — version bumping, immutability, last-write-wins ordering, ops
   targeting deleted notes, and replay convergence.
@@ -102,6 +102,14 @@ pnpm test
   than throwing.
 - **Auth guard** — the difference between a missing token and an invalid one, and that a
   forged token never reaches `req.user`.
+- **Websocket gateway** — membership enforcement on join, that an unverifiable token
+  fails without killing the connection, presence fan-out as people arrive and leave,
+  room isolation, cursor updates reaching everyone *except* the sender while ops reach
+  the sender too, and monotonic sequence numbers.
+
+The gateway tests run a real HTTP server and real websocket clients, stubbing only
+Prisma and the reducer, so the routing and broadcast behaviour is genuinely exercised
+rather than asserted against a mock.
 
 `apps/api/vitest.config.ts` supplies throwaway environment values, since `lib/env.ts`
 validates the environment at import time and would otherwise refuse to load.
