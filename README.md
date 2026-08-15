@@ -92,7 +92,7 @@ pages disable the Google button and name the two variables to set.
 pnpm test
 ```
 
-52 cases:
+75 cases:
 
 - **State reducer** — version bumping, immutability, last-write-wins ordering, ops
   targeting deleted notes, and replay convergence.
@@ -102,6 +102,13 @@ pnpm test
   than throwing.
 - **Auth guard** — the difference between a missing token and an invalid one, and that a
   forged token never reaches `req.user`.
+- **Auth routes** — signup validation and duplicate emails, login against a stored hash
+  including the Google-only account with no password, and `/auth/me` for a live, deleted
+  and unauthenticated user, exercised end-to-end with Fastify's `inject()` against a
+  stubbed Prisma client.
+- **Workspace routes** — creation seeding an owner membership, listing scoped to the
+  caller's memberships in recency order with member counts, membership-gated reads, and
+  delete restricted to the owner.
 - **Websocket gateway** — membership enforcement on join, that an unverifiable token
   fails without killing the connection, presence fan-out as people arrive and leave,
   room isolation, cursor updates reaching everyone *except* the sender while ops reach
